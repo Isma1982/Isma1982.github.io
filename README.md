@@ -44,4 +44,60 @@ index.html
     Built with HTML & CSS | Hosted on GitHub Pages
   </footer>
 </body>
-</html>
+</html> <!-- Password Strength Checker -->
+<h2>Password Strength Checker</h2>
+<p>Test if your password meets basic security standards:</p>
+<input type="password" id="passwordInput" placeholder="Type a password..." style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px;">
+<div id="result" style="margin-top: 10px; padding: 10px; border-radius: 4px;"></div>
+
+<script>
+function checkPasswordStrength(password) {
+  let messages = [];
+  let isValid = true;
+
+  // Rule 1: At least 8 characters
+  if (password.length < 8) {
+    messages.push("❌ Too short – use at least 8 characters.");
+    isValid = false;
+  }
+
+  // Rule 2: Contains a number
+  if (!/\d/.test(password)) {
+    messages.push("⚠️ Add at least one number (0-9).");
+    isValid = false;
+  }
+
+  // Rule 3: Contains a special character
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    messages.push("⚠️ Add a symbol (e.g., !, @, #, $).");
+    isValid = false;
+  }
+
+  // Rule 4: Contains uppercase letter
+  if (!/[A-Z]/.test(password)) {
+    messages.push("⚠️ Add an uppercase letter (A-Z).");
+    isValid = false;
+  }
+
+  if (isValid) {
+    return "✅ Strong password! Good job.";
+  } else {
+    return messages.join("<br>");
+  }
+}
+
+// Real-time checking
+document.getElementById("passwordInput").addEventListener("input", function() {
+  const password = this.value;
+  const resultDiv = document.getElementById("result");
+  
+  if (password === "") {
+    resultDiv.innerHTML = "";
+    resultDiv.style.backgroundColor = "";
+  } else {
+    const feedback = checkPasswordStrength(password);
+    resultDiv.innerHTML = feedback;
+    resultDiv.style.backgroundColor = feedback.includes("✅") ? "#d4edda" : "#f8d7da";
+  }
+});
+</script>
